@@ -45,4 +45,8 @@ struct ForwardList
     void addBefore(std::string target, std::string key, int occurrence = 0);  
 
     void removeBefore(std::string target, int occurrence = 0);   
+
+    void addAfter(std::string target, std::string key, int occurrence = 0);  
+
+    void removeAfter(std::string target, int occurrence = 0);        
 };
