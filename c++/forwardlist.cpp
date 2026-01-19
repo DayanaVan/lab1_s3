@@ -274,3 +274,58 @@ void ForwardList::removeBefore(std::string target, int occurrence)
         current = current->next;
     }
 }
+
+// Добавление после элемента 
+void ForwardList::addAfter(std::string target, std::string key, int occurrence)
+{
+    if (occurrence < 0)
+        return;
+
+    int n = 0;
+    ForwardListNode* node = this->head;
+
+    while (node != nullptr)
+    {
+        if (node->key == target)
+        {
+            if (n == occurrence)
+            {
+                ForwardListNode* newNode = new ForwardListNode(key);
+                newNode->next = node->next;
+                node->next = newNode;
+                return;
+            }
+            n++;
+        }
+        node = node->next;
+    }
+}
+
+// Удаление после элемента
+void ForwardList::removeAfter(std::string target, int occurrence)
+{
+    if (occurrence < 0 || this->head == nullptr)
+        return;
+
+    int n = 0;
+    ForwardListNode* node = this->head;
+
+    while (node != nullptr)
+    {
+        if (node->key == target)
+        {
+            if (n == occurrence)
+            {
+                if (node->next != nullptr)
+                {
+                    ForwardListNode* toDelete = node->next;
+                    node->next = toDelete->next;
+                    delete toDelete;
+                }
+                return;
+            }
+            n++;
+        }
+        node = node->next;
+    }
+}
