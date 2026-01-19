@@ -158,3 +158,111 @@ func (this *ForwardList) find(key string, num int) *ForwardListNode {
 	}
 	return nil
 }
+
+func (this *ForwardList) addBefore(key, targetKey string, num int) {
+	if this.head == nil {
+		return
+	}
+	
+	if this.head.key == targetKey {
+		count := 0
+		node := this.head
+		for node != nil && node.key == targetKey {
+			if count == num {
+				newNode := &ForwardListNode{key, nil}
+				newNode.next = this.head
+				this.head = newNode
+				return
+			}
+			count++
+			node = node.next
+		}
+	}
+
+	count := 0
+	prev := this.head
+	for prev.next != nil {
+		if prev.next.key == targetKey {
+			if count == num {
+				newNode := &ForwardListNode{key, nil}
+				newNode.next = prev.next
+				prev.next = newNode
+				return
+			}
+			count++
+		}
+		prev = prev.next
+	}
+}
+
+func (this *ForwardList) addAfter(key, targetKey string, num int) {
+	if this.head == nil {
+		return
+	}
+	
+	count := 0
+	node := this.head
+	for node != nil {
+		if node.key == targetKey {
+			if count == num {
+				newNode := &ForwardListNode{key, nil}
+				newNode.next = node.next
+				node.next = newNode
+				return
+			}
+			count++
+		}
+		node = node.next
+	}
+}
+
+func (this *ForwardList) removeBefore(targetKey string, num int) {
+	if this.head == nil || this.head.next == nil {
+		return
+	}
+
+	count := 0
+	if this.head.next.key == targetKey {
+		temp := this.head
+		for temp != nil && temp.key == this.head.next.key {
+			if count == num {
+				this.removeHead()
+				return
+			}
+			count++
+			temp = temp.next
+		}
+	}
+
+	count = 0
+	prev := this.head
+	for prev.next != nil && prev.next.next != nil {
+		if prev.next.next.key == targetKey {
+			if count == num {
+				prev.next = prev.next.next
+				return
+			}
+			count++
+		}
+		prev = prev.next
+	}
+}
+
+func (this *ForwardList) removeAfter(targetKey string, num int) {
+	if this.head == nil {
+		return
+	}
+	
+	count := 0
+	node := this.head
+	for node != nil && node.next != nil {
+		if node.key == targetKey {
+			if count == num {
+				node.next = node.next.next
+				return
+			}
+			count++
+		}
+		node = node.next
+	}
+}
